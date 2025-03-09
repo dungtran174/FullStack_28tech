@@ -1,0 +1,12 @@
+extends ../../layouts/default
+include ../../mixins/tour-layout
+include ../../mixins/pagination
+include ../../mixins/breadcrumb
+block main
+  +breadcrumbs(pageTitle, 'Danh mục')
+  section#portfolio.portfolio
+    .container
+      .row.portfolio-container(data-aos='fade-up')
+        +tour-grid(tours)
+      if(pagination)
+        +pagination(pagination)

@@ -1,0 +1,128 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+include ../../mixins/status.pug
+block main
+  h1 Thêm sản phẩm mới
+  form(
+    action=`${prefixAdmin}/products/create`
+    id="form-create-product"
+    method="POST"
+    enctype="multipart/form-data"
+    class="border border-1 p-4 me-3"
+  )
+    .row
+      .col-4
+        .row
+          .form-group.mb-2 
+            label(for="title" class="form-label") Tên sản phẩm *
+            input.form-control(
+              type="text"
+              id="title"
+              name="title"
+            )
+            //- if errors
+            //-   span(class="text-danger") #{errors.errors[0].msg}
+
+        .row
+          if categories
+            div(class="form-group my-2")
+              label(for="product_category_id" class="form-label") Danh mục
+              select(
+                name="product_category_id"
+                id="product_category_id"
+                class="form-control form-select"
+              )
+                option(value="") -- Chọn danh mục --
+                if(categories)
+                  +select-tree(categories)
+        .row
+          .form-group.mb-2(upload-image)
+            label(for="thumbnail" class="form-label") Ảnh
+            input.form-control(
+              type="file"
+              class="form-control-file"
+              id="thumbnail"
+              name="thumbnail"
+              accept="image/*"
+              upload-image-input
+            )
+            img(
+              src=""
+              upload-image-preview
+              class="img-thumbnail"
+            )
+      .col-8
+        .row
+          .col-6
+            div(class="form-group mb-2")
+              label(for="price" class="form-label") Giá gốc *
+              input(
+                type="number"
+                class="form-control"
+                id="price"
+                name="price"
+                value="0"
+                min="0"
+              )
+          .col-6
+            div(class="form-group mb-2")
+              label(for="discount" class="form-label") % Giảm giá
+              input(
+                type="number"
+                class="form-control"
+                id="discount"
+                name="discountPercentage"
+                value="0"
+                min="0"
+              )
+        .row
+          .col-6
+            div(class="form-group mb-2")
+              label(for="stock" class="form-label") Số lượng
+              input(
+                type="number"
+                class="form-control"
+                id="stock"
+                name="stock"
+                value="0"
+                min="0"
+              )
+        +status()
+        .row
+          .col-2
+            span Nổi bật:
+          .col-3
+            div(class="form-group form-check form-check-inline")
+              input(
+                type="radio"
+                class="form-check-input"
+                id="featured1"
+                name="featured"
+                value="1"
+              )
+              label(for="featured1" class="form-check-label") Có
+          .col-4
+            div(class="form-group form-check form-check-inline")
+              input(
+                type="radio"
+                class="form-check-input"
+                id="featured0"
+                name="featured"
+                value="0"
+                checked
+              )
+              label(for="featured0" class="form-check-label") Không
+        .row
+          .form-group.mb-2
+            label(for="desc" class="form-label") Mô tả
+            textarea.form-control.textarea-mce(
+              id="desc"
+              name="description"
+              rows="6"
+            )
+        .row.w-25.m-1
+          button.btn.btn-primary(type="submit") Thêm mới
+      
+      
+      

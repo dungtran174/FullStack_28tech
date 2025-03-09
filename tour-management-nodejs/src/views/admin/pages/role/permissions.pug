@@ -1,0 +1,37 @@
+extends ../../layouts/default
+include ../../mixins/permissions
+block main
+  .m-2
+    h1(class="mb-4") Phân chia quyền cho tài khoản hệ thống
+    if(roles)
+      div(data-records=roles)
+      div(class="text-right")
+        button(
+          type="submit"
+          class="btn btn-primary mb-3"
+          button-submit
+        ) Cập nhật
+      table(
+        class="table table-hover table-sm"
+        table-permissions
+      )
+        +headerTable(roles)
+        tbody
+          +dataName(roles)
+          +category(roles)
+          +tour(roles)
+          +role(roles)
+          +account(roles)
+  form(
+    id="form-change-permissions"
+    method="POST"
+    action=`/api/v1/roles/permissions?_method=PATCH`
+    class="d-none"
+  )
+    div(class="form-group")
+      input(
+        type="text"
+        class="form-control"
+        name="permissions"
+      )
+  script(src="/admin/js/role.js") 

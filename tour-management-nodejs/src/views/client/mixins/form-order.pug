@@ -1,0 +1,59 @@
+
+mixin form-order(id, deposit)
+  form.was-validated(
+    id="formCheckout" 
+    action=`/api/v1/booking/checkout/${id}`
+    method='POST'
+  )
+    .row.bg-light.m-0.w-100
+      .col-12.px-4.mt-4
+        p.fw-bold.fs-4 Thông tin người đặt tour
+      .col-12.px-4.w-100
+        .m-0
+          label.form-label(for='uname') Tên người đặt tour:
+          input#uname.form-control(type='text' placeholder='Họ và tên...' name='username' required='')
+          .invalid-feedback Không được để trống!
+        .my-3
+          label.form-label(for='phone') Số điện thoại:
+          input#phone.form-control(type='text' name='phone' required='')
+          .invalid-feedback Không được để trống!
+        .form-floating.w-100.p-0.mt-2.bg-light
+          textarea#floatingTextarea2.form-control.w-100(placeholder='thông tin thêm' style='height: 100px' name="note")
+          label.form-label(for='floatingTextarea2') Ghi chú
+      .col-12.px-4
+        div.form-group
+          label.mt-2(for='amount') Lưu ý để đặt tour bạn cần phải đặt cọc 30% giá trị của tour
+          input.form-control#amount(
+            name='amount'
+            placeholder='Số tiền'
+            value=deposit
+          )
+        div.form-group.my-2 
+          span.fw-bold Chọn phương thức thanh toán:
+          label.control-label
+            .form-check
+              input.form-check-input(type="radio" name="bankCode" id="defaultPaymentMethod" value="" checked)
+              label.form-check-label(for="defaultPaymentMethod") Cổng thanh toán VNPAYQR
+            .form-check
+              input.form-check-input(type="radio" name="bankCode" id="vnpayqrPaymentMethod" value="VNPAYQR")
+              label.form-check-label(for="vnpayqrPaymentMethod") Thanh toán qua ứng dụng hỗ trợ VNPAYQR
+            .form-check
+              input.form-check-input(type="radio" name="bankCode" id="vnbankPaymentMethod" value="VNBANK")
+              label.form-check-label(for="vnbankPaymentMethod") Thanh toán qua ATM-Tài khoản ngân hàng nội địa
+            .form-check
+              input.form-check-input(type="radio" name="bankCode" id="intcardPaymentMethod" value="INTCARD")
+              label.form-check-label(for="intcardPaymentMethod") Thanh toán qua thẻ quốc tế
+            .form-group.form-check.mb-2
+              input(
+                type="radio"
+                class="form-check-input"
+                id="statusCash"
+                name="bankCode"
+                value="CASH"
+              )
+              label(for="statusCash" class="form-check-label") Thanh toán tiền mặt
+    .row.m-0
+      .col-12.mb-1.p-0.w-100
+        button.btn.btn-dark.w-100#btnPopup(type="submit")
+          | Thanh toán
+          i(class="bi bi-arrow-right mx-2")

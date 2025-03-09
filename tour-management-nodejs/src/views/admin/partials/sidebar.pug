@@ -1,0 +1,57 @@
+sidebar#layoutSidenav
+  #layoutSidenav_nav
+    nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-light
+      .sb-sidenav-menu
+        .nav.fw-bold
+          .sb-sidenav-menu-heading Core
+          a.nav-link(href=`${prefixAdmin}/`)
+            .sb-nav-link-icon
+              i.fas.fa-tachometer-alt
+            | Dashboard
+          
+          .sb-sidenav-menu-heading Thống kê
+          a.nav-link(href=`${prefixAdmin}/statistic`)
+            .sb-nav-link-icon
+              i.fas.fa-chart-area
+            | Biểu đồ thống kê
+          a.nav-link(href=`${prefixAdmin}/booking`)
+            .sb-nav-link-icon
+              i.fas.fa-chart-area
+            | Danh sách đặt tour
+          .sb-sidenav-menu-heading Quản trị hệ thống
+          a.nav-link.collapsed(href='#' data-bs-toggle='collapse' data-bs-target='#collapseLayouts' aria-expanded='false' aria-controls='collapseLayouts')
+            .sb-nav-link-icon
+              i.fas.fa-columns
+            | Quản lý dữ liệu
+            .sb-sidenav-collapse-arrow
+              i.fas.fa-angle-down
+          #collapseLayouts.collapse(aria-labelledby='headingOne' data-bs-parent='#sidenavAccordion')
+            nav.sb-sidenav-menu-nested.nav
+              a.nav-link(href=`${prefixAdmin}/tours`) Quản lý tour
+              a.nav-link(href=`${prefixAdmin}/categories`) Quản lý danh mục
+              a.nav-link(href=`${prefixAdmin}/users`) Quản lý tài khoản
+              a.nav-link(href=`${prefixAdmin}/roles`) Quản lý quyền
+              a.nav-link(href=`${prefixAdmin}/roles/permissions`) Cấp quyền tài khoản
+
+          a.nav-link.collapsed(href='#' data-bs-toggle='collapse' data-bs-target='#collapsePages' aria-expanded='false' aria-controls='collapsePages')
+            .sb-nav-link-icon
+              i(class="fa-solid fa-trash")
+            | Thùng rác
+            .sb-sidenav-collapse-arrow
+              i.fas.fa-angle-down
+          #collapsePages.collapse(aria-labelledby='headingTwo' data-bs-parent='#sidenavAccordion')
+            nav#sidenavAccordionPages.sb-sidenav-menu-nested.nav.accordion
+              a.nav-link(href=`${prefixAdmin}/trash`) Tour đã xóa
+              //- a.nav-link(href=`${prefixAdmin}/trash/categories`) Danh mục đã xóa
+              //- a.nav-link(href=`${prefixAdmin}/trash/accounts`) Tài khoản đã xóa
+              //- a.nav-link(href=`${prefixAdmin}/trash/roles`) Quyền đã xóa
+
+          .sb-sidenav-menu-heading General settings
+          a.nav-link(href=`${prefixAdmin}/settings`)
+            .sb-nav-link-icon
+              i(class="fa-solid fa-gear")
+            | Cài đặt
+          a.nav-link(href=`${prefixAdmin}/logout`)
+            .sb-nav-link-icon
+              i(class="fa-solid fa-right-from-bracket")
+            | Đăng xuất

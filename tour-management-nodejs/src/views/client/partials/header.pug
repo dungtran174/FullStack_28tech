@@ -1,0 +1,47 @@
+include ../mixins/sub-menu.pug
+include ../mixins/search-box
+header#header.fixed-top.header-transparent
+  .container.justify-content-between
+    .logo
+      h1.text-light
+        a(href='/')
+          span VN tourism
+    nav#navbar.navbar
+      ul
+        li
+          a.nav-link(href='/') Trang chủ
+        li.dropdown
+          a(href='/tours')
+            span Danh Mục
+            i(class="bi bi-chevron-compact-down")
+          +sub-menu(layoutToursCategory)
+        li
+          a.nav-link(href='/price-table') Bảng giá
+        //- li
+        //-   a.nav-link(href='/blog') Tin tức
+        li
+          a.nav-link(href='/contact') Liên Hệ
+        li
+          a.nav-link(href='/policy') Chính sách
+        li 
+          a(href="/cart")
+            i(class="bi bi-cart4 fs-5")
+            sup.fs-6 (#{miniCart && miniCart.quantity > 0 ? miniCart.quantity : 0})
+        li.dropdown
+          a(href=`#`)
+            i(class="bi bi-person-circle fs-5")
+            i(class="bi bi-chevron-compact-down fs-5")
+          ul
+            if user
+              li
+                a(href=`/info/${user.id}`) Trang cá nhân
+              li
+                a(href="/api/v1/auth/logout") Đăng xuất
+            else
+              li
+                a(href="/login") Đăng nhập
+              li
+                a(href="/register") Đăng ký
+      i.bi.bi-list.mobile-nav-toggle
+  .container
+    +search-box()

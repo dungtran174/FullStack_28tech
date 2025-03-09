@@ -1,0 +1,19 @@
+mixin payment-methods(amount)
+  .table-responsive
+    div.form-group
+      label(for='amount') Số tiền
+      input.form-control#amount(
+        name='amount'
+        placeholder='Số tiền'
+        value=amount
+      )
+    .row.m-0
+      .col-12.mb-1.p-0.w-100
+        a.btn.btn-dark.w-100#btnPopup
+          | Thanh toán tiền mặt
+          i(class="bi bi-arrow-right mx-2")
+    .row.m-0
+      .col-12.mb-4.p-0.w-100
+        a.btn.btn-dark.w-100#btnPopup
+          | Thanh toán qua thẻ ngân hàng
+          i(class="bi bi-arrow-right mx-2")

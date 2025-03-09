@@ -1,0 +1,23 @@
+extends ../../layouts/default
+include ../../mixins/tour-layout
+include ../../mixins/slide-tour
+
+block main 
+  section#hero
+    .hero-container(data-aos='fade-up')
+      h1 Chào mừng quý khách đến với VIETNAM TOURISM
+      h2 Khám phá những hành trình tuyệt vời tại Việt Nam cùng chúng tôi
+      a.btn-get-started.scrollto(href='#portfolio')
+        i.bi.bi-chevron-double-down
+
+  section#portfolio.portfolio
+    .container
+      .section-title(data-aos='fade-in' data-aos-delay='100')
+          h2 Top BookingBooking
+      .row.portfolio-container(data-aos='fade-up')
+          +tour-grid(topBooking)
+      .section-title(data-aos='fade-in' data-aos-delay='100')
+        h2 Tour nổi bật
+      .row.portfolio-container(data-aos='fade-up')
+        +tour-grid(newToursFeatured)
+  +slide-tour(tourTopLike)

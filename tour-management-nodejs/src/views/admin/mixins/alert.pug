@@ -1,0 +1,18 @@
+mixin alert-success(time)
+  if messages.success
+    .message.info.col-4
+      .alert.alert-success.fs-6(
+        show-alert 
+        data-time=time
+      ) #{messages.success} 
+        i(class="fa-regular fa-circle-xmark" close-alert)
+
+mixin alert-error(time)
+  if messages.error
+    .message.info.col-4
+      .alert.alert-danger.fs-6(
+        show-alert 
+        data-time=time
+      ) #{messages.error} 
+        i(class="fa-regular fa-circle-xmark" close-alert)
+        

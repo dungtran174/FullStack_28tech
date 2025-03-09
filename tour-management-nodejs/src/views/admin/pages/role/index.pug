@@ -1,0 +1,60 @@
+extends ../../layouts/default
+include ../../mixins/filterStatus
+include ../../mixins/moment
+include ../../mixins/headerTable
+include ../../mixins/action
+include ../../mixins/router
+include ../../mixins/formChangeStatus
+include ../../mixins/formDelete
+
+block main
+  - var link = "roles";
+  +router(link, "Management", "Roles")
+  .card
+    .card-header
+      i.fas.fa-table.me-1
+      | Danh sách quyền
+    .card-body
+      +header-table(link, filterStatus)
+      if(roles.length > 0)
+        table#datatablesSimple(checkbox-multi)
+          thead
+            tr
+              th 
+                input(class="form-check-input checkAll" type="checkbox" name="checkAll")
+              th STT
+              th Tên quyền
+              th Trạng thái 
+              th 
+                span(class="actionAll") Hành động
+          tbody
+            each item, index in roles
+              tr
+                td 
+                  input(
+                    class="form-check-input"
+                    type="checkbox"
+                    name="check-item"
+                    value=item.id
+                  )
+                td #{index + 1}
+                td #{item.title}
+                td
+                  a(href="#" 
+                    class="badge" 
+                    data-status=item.status
+                    data-id=item.id
+                    link-change-status
+                  ) 
+                    div.form-check.form-switch
+                      input.form-check-input.fs-5.text-success(
+                        type='checkbox'
+                        id='flexSwitchCheckDefault'
+                        checked=item.status === "active"
+                      )
+                td
+                  +actions(link, item)
+      else
+        p.text-center Chưa có quyền nào!  
+  +formChangeStatus(link)
+  +formDelete(link)  

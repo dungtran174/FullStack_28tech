@@ -1,0 +1,132 @@
+extends ../../layouts/default
+include ../../mixins/status
+include ../../mixins/selectTree
+include ../../mixins/featured
+include ../../mixins/router
+include ../../mixins/transport
+block main
+  +router("tours", "Management", "Tours", "Create")
+  h1 Thêm tour mới
+  form(
+    action=`/api/v1/tours/create`
+    id="form-create-tour"
+    method="POST"
+    enctype="multipart/form-data"
+    class="border border-1 p-4 me-3"
+  )
+    .row
+      .col-5
+        .row
+          .form-group.mb-2 
+            label(for="title" class="form-label") Tên tour *
+            input.form-control(
+              type="text"
+              id="title"
+              name="title"
+            )
+        .row.mb-2
+          if categories
+            div(class="form-group my-2")
+              label(for="tour_category_id" class="form-label") Danh mục *
+              select(
+                name="tour_category_id"
+                id="tour_category_id"
+                class="form-control form-select"
+              )
+                option(value="" disabled="disabled" selected="selected") -- Chọn danh mục --
+                  +select-tree(categories)
+        .row
+          .form-group.mb-2(upload-image)
+            label(for="images" class="form-label") Ảnh * (tối đa 10 ảnh)
+            input.form-control(
+              type="file"
+              class="form-control-file"
+              id="images"
+              name="images"
+              accept="image/*"
+              multiple
+            )
+            div(id="image-preview-container" class="mt-2")
+      .col-7
+        .row
+          .col-6
+            div(class="form-group mb-2")
+              label(for="priceAdult" class="form-label") Giá người lớn/1 người (>= 18 tuổi)
+              input(
+                type="number"
+                class="form-control"
+                id="price"
+                name="priceAdult"
+                value="0"
+                min="0"
+              )
+          .col-5
+            div(class="form-group mb-2")
+              label(for="priceChild" class="form-label") Giá trẻ em/1 người (< 18 tuổi)
+              input(
+                type="number"
+                class="form-control"
+                id="price"
+                name="priceChild"
+                value="0"
+                min="0"
+              )
+        .row.mt-2
+          .col-6
+            div(class="form-group mb-2")
+              label(for="discount" class="form-label") % Giảm giá
+              input(
+                type="number"
+                class="form-control"
+                id="discount"
+                name="discountPercentage"
+                value="0"
+                min="0"
+              )
+        .row.mt-2
+          .col-3
+            div(class="form-group mb-2")
+              label(for="stock" class="form-label") Số lượng tour *
+              input(
+                type="number"
+                class="form-control"
+                id="stock"
+                name="stock"
+                value="0"
+                min="0"
+              )
+          .col-5
+            div(class="form-group")
+              label(for="numberOfDays" class="form-label") Thời lượng *
+              input(
+                class="form-control"
+                id="numberOfDays"
+                name="numberOfDays"
+              )
+          .col-4
+            div(class="form-group")
+              label(for="departureLocation" class="form-label") Nơi khởi hành *
+              input(
+                class="form-control"
+                id="departureLocation"
+                name="departureLocation"
+              )
+        .row.my-2
+          +status()
+        .row.mb-2
+          +featured()
+        .row.mb-2
+          +transport()
+        .row
+          .form-group
+            label(for="info" class="form-label") Thông tin tour
+            textarea.form-control.textarea-mce(
+              id="info"
+              name="information"
+              rows="6"
+            )
+        .row.w-25.m-1
+          button.btn.btn-primary(type="submit") Thêm mới
+
+    
+      

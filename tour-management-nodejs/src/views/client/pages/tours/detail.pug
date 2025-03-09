@@ -1,0 +1,133 @@
+extends ../../layouts/default
+include ../../mixins/time-start
+include ../../mixins/user-none
+include ../../mixins/moment
+include ../../mixins/stars
+include ../../mixins/pagination
+
+block main
+  section.breadcrumbs
+    .container
+      .d-flex.justify-content-between.align-items-center
+        h2 #{tour.title}
+        ol
+          li
+            a(href='/') Trang chủ
+          li
+            a(href='/tours') Danh mục
+          li Chi tiết
+  section#portfolio-details.portfolio-details
+    .container
+      .row
+        .col-lg-7
+          .portfolio-details-slider.swiper
+            .swiper-wrapper.align-items-center
+              each img in tour.images
+                .swiper-slide
+                  img(src=img alt=tour.title)
+            .swiper-pagination
+        .col-lg-5
+          .portfolio-info
+            h3 #{tour.title} 
+            div.border.p-3
+              .info-tour.border-bottom.pb-2.row
+                .col-6
+                  i(class="bi bi-upc-scan me-1")          
+                  span MÃ TOUR:
+                .col-6
+                  span #{tour.code}
+              .info-tour.border-bottom.py-2.row
+                .col-6
+                  i(class="bi bi-alarm me-1 text-warning")          
+                  span Thời lượng:
+                .col-6
+                  span #{tour.numberOfDays}
+              .info-tour.border-bottom.py-2.row 
+                .col-6
+                  i(class="bi bi-geo me-2 text-primary")
+                  span Khởi hành: 
+                .col-6
+                  span #{tour.departureLocation}
+              .info-tour.border-bottom.py-2.row 
+                .col-6
+                  i(class="bi bi-truck me-2")
+                  span Phương tiện:
+                .col-6
+                  span Ô tô
+              .info-tour.border-bottom.py-2.row 
+                .col-6
+                  i(class="bi bi-calendar-check me-2")
+                  span Ngày hoạt động:
+                .col-6
+                  span Hàng ngày
+              .info-tour.border-bottom.py-2.row 
+                .col-6
+                  span Giá người lớn(>= 18 tuổi):
+                .col-6
+                  span.text-danger(data-price) #{tour.priceAdult}
+              .info-tour.border-bottom.py-2.row
+                .col-6
+                  span Giá trẻ em(< 18 tuổi):
+                .col-6
+                  span.text-danger(data-price) #{tour.priceChild}
+              form(
+                action=`/api/v1/cart/add/${tour.id}`
+                method="POST"
+              )
+                .quantityAdult.py-2
+                  span Số người lớn
+                  input(
+                    class="form-control mb-1"
+                    type="number"
+                    name="quantityAdult"
+                    value="1"
+                    min="1"
+                  )
+                .quantityChild
+                  span Số trẻ em
+                  input(
+                    class="form-control mb-2"
+                    type="number"
+                    name="quantityChild"
+                    value="0"
+                    min="0"
+                  )
+                .time
+                  span Chọn ngày dự kiến
+                  +time-start()
+                .text-center.py-2
+                  button(type="submit" class="btn btn-info rounded-pill") Thêm tour vào giỏ hàng
+      .row.mt-3
+        h3.fw-bold MÔ TẢ VÀ LỊCH TRÌNH
+        .information !{tour.information}
+      .row.reviews-container.p-2.shadow.bg-body.rounded
+        h3.fw-bold PHẢN HỒI TỪ KHÁCH HÀNG
+        #reviews
+          if reviews
+            each item in reviews
+              div(class="review p-3 mb-4 border rounded")
+                .d-flex.mb-2
+                  img(src=item.infoUser.avatar class="img-user-review")
+                  .info-right.ms-2
+                    p.p-0.m-0.fw-bold #{item.infoUser.username || 'Người ẩn danh'}
+                    i.text-secondary.time-feedback
+                      +formatDateTime(item.createdAt)
+                    case item.rating
+                      when 5
+                        +five-stars()
+                      when 4
+                        +four-stars()
+                      when 3
+                        +three-stars()
+                      when 2
+                        +two-stars()
+                      when 1
+                        +one-stars()
+                    p #{item.comment}
+          else
+            p.text-center Chưa có bình luận nào
+        if(pagination)
+          +pagination(pagination)
+  if user
+    +user-none(user)
+  script(src="/client/js/time.js")

@@ -1,0 +1,5 @@
+mixin sub-menu(items)
+  ul
+    each item in items
+      li
+        a(href=`/tours/${item.slug}`) #{item.title}
